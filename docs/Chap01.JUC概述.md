@@ -62,3 +62,7 @@ A thread can be in only one state at a given point in time. These states are vir
 
 * 当主线程结束后,用户线程还在运行,JVM 存活
 * 当主线程结束后,用户线程还在运行,JVM 存活
+
+
+## Reference
+* [Java中的进程与线程（总结篇）](https://www.cnblogs.com/WuXuanKun/p/6259965.html)
