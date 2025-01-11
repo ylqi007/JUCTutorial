@@ -1,0 +1,94 @@
+package com.atguigu;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.*;
+
+public class CompletableFutureUseDemo {
+
+    @Test
+    public void test01() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> integerCompletableFuture = CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + " is running");   // ForkJoinPool.commonPool-worker-1 is running
+            int result = ThreadLocalRandom.current().nextInt(10);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Get result after 2s: " + result);
+            return result;
+        });
+
+        System.out.println(Thread.currentThread().getName() + " is working on other tasks");    // main is working on other tasks
+        System.out.println(integerCompletableFuture.get());
+    }
+
+    @Test
+    public void test02() {
+        CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + " is running");   // ForkJoinPool.commonPool-worker-1 is running
+            int result = ThreadLocalRandom.current().nextInt(10);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Get result after 2s: " + result);
+            return result;
+        }).whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println(Thread.currentThread().getName() + "计算完成，更新value=" + result);
+            }
+        }).exceptionally(e -> {
+            e.printStackTrace();
+            System.out.println("计算时发生异常：" + e.getCause() + "\t" + e.getMessage());
+            return null;
+        });
+
+        System.out.println(Thread.currentThread().getName() + " is working on other tasks");    // main is working on other tasks
+        // main线程不要立刻结束，否则CompletableFuture默认使用的线程池会立刻关闭。做法：暂停3s
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void test03() {
+        ExecutorService threadPool = Executors.newFixedThreadPool(3);
+        try {
+            CompletableFuture.supplyAsync(() -> {
+                System.out.println(Thread.currentThread().getName() + " is running");   // ForkJoinPool.commonPool-worker-1 is running
+                int result = ThreadLocalRandom.current().nextInt(10);
+                // System.out.println("Get result after 2s: " + result);   // 有结果
+                if(result > 2) {
+                    int i = result / 0;
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Get result after 2s: " + result);
+                return result;
+            }, threadPool).whenComplete((result, ex) -> {
+                if (ex == null) {
+                    System.out.println(Thread.currentThread().getName() + "计算完成，更新value=" + result);
+                }
+            }).exceptionally(e -> {
+                e.printStackTrace();
+                System.out.println("计算时发生异常：" + e.getCause() + "\t" + e.getMessage());
+                return null;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            threadPool.shutdown();
+        }
+
+        System.out.println(Thread.currentThread().getName() + " is working on other tasks");    // main is working on other tasks
+    }
+
+}
