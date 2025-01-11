@@ -232,4 +232,43 @@ public class CompletableFutureAPIDemo {
         }
     }
 
+    /**
+     * 对处理结果进行消费：Consumer
+     *  * thenRun(Runnable runnable) :任务A执行完执行B，并且不需要A的结果
+     *  * thenAccept(Consumer action): 任务A执行完执行B，B需要A的结果，但是任务B没有返回值
+     *  * thenApply(Function fn): 任务A执行完执行B，B需要A的结果，同时任务B有返回值
+     */
+    // 任务A执行完执行B，B需要A的结果，同时任务B有返回值
+    @Test
+    public void test05() {
+        CompletableFuture.supplyAsync(() -> 1)
+                .thenApply(f -> f + 2)
+                .thenApply(f -> f + 3)
+                .thenAccept(System.out::println);
+
+        System.out.println(Thread.currentThread().getName() + " is working on other tasks");
+    }
+
+    // 任务A执行完执行B，并且不需要A的结果
+    @Test
+    public void test06() {
+        System.out.println(CompletableFuture.supplyAsync(() -> "Result A")
+                .thenRun(() -> System.out.println(Thread.currentThread().getName()))
+                .join());
+    }
+
+    @Test
+    public void test07() {
+        System.out.println(CompletableFuture.supplyAsync(() -> "Result A")
+                .thenAccept(r -> System.out.println(Thread.currentThread().getName() + ": ---> " + r))
+                .join());
+    }
+
+    // thenApply(Function fn): 任务A执行完执行B，B需要A的结果，同时任务B有返回值
+    @Test
+    public void test08() {
+        System.out.println(CompletableFuture.supplyAsync(() -> "Result A")
+                .thenApply(r -> Thread.currentThread().getName() + ": ---> " + r + " ---> " + "Result B")
+                .join());
+    }
 }
