@@ -5,7 +5,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class FutureAPIDemo {
+public class FutureTaskDemo1 {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
         FutureTask<String> futureTask = new FutureTask<>(() -> {
