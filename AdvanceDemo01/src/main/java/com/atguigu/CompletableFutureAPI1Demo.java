@@ -11,7 +11,11 @@ import java.util.concurrent.TimeoutException;
  * CompletableFuture 常用方法1: 获取结果和触发计算
  *  * get()                 一直等待，造成阻塞
  *  * get(long, TimeUnit)   过时不侯
- *  * join()
+ *  * join()    和get一样的作用，只是不需要抛出异常
+ *  * public T getNow(T valuelfAbsent) --->计算完成就返回正常值，否则返回备胎值（传入的参数），立即获取结果不阻塞
+ *
+ * 触发计算
+ *  * public boolean complete(T value) ---->是否打断get方法立即返回括号值
  */
 public class CompletableFutureAPI1Demo {
 
@@ -129,10 +133,8 @@ public class CompletableFutureAPI1Demo {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        // Sleep 1s, then return: true	complete value, 即主动打断 stringCompletableFuture，返回 "complete value"
+        // Sleep 3s, then return: false	abs, 也就是 stringCompletableFuture 没有被打断，返回的就是 CompletableFuture 计算的结果
         System.out.println(completableFuture.complete("打断Task，任务没有完成") + "\t" + completableFuture.join());
     }
-
-
-
-
 }
