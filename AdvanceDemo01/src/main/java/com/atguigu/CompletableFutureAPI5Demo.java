@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Time;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class CompletableFutureAPI5Demo {
@@ -38,5 +39,30 @@ public class CompletableFutureAPI5Demo {
         });
 
         System.out.println(result.join());
+    }
+
+    @Test
+    public void test2() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> thenCombineResult = CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + " start at 1");
+            return 10;
+        }).thenCombine(CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + " start at 2");
+            return 20;
+        }), (x, y) -> {
+            System.out.println("x = " + x + ", y = " + y);
+            System.out.println(Thread.currentThread().getName() + " start at 3");
+            return x + y;
+        }).thenCombine(CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName() + " start at 4");
+            return 30;
+        }), (a, b) -> {
+            System.out.println("a = " + a + ", b = " + b);
+            System.out.println(Thread.currentThread().getName() + " start at 5");
+            return a + b;
+        });
+
+        System.out.println("main thread ends");
+        System.out.println(thenCombineResult.get());
     }
 }

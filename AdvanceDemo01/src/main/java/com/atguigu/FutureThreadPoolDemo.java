@@ -1,11 +1,14 @@
 package com.atguigu;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.concurrent.*;
 
 public class FutureThreadPoolDemo {
 
     // Use multi thread
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    @Test
+    public void main() throws ExecutionException, InterruptedException {
         // 3 tasks, but only one main() to process. How long it will take
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
 
@@ -49,12 +52,14 @@ public class FutureThreadPoolDemo {
 
         threadPool.shutdown();
 
-        System.out.println("Total cost time = " + (endTime - startTime) + "ms");
+        System.out.println("Total cost time = " + (endTime - startTime) + "ms");    // Total cost time = 606ms
         System.out.println(Thread.currentThread().getName() + " ends");
     }
 
-    public static void main1(String[] args) {
+    @Test
+    public void main1() {
         // 3 tasks, but only one main() to process. How long it will take
+        // 3 个任务，但是只有一个 main 线程，需要多少时间才能处理完？
         long startTime  = System.currentTimeMillis();
 
         try {
@@ -76,7 +81,7 @@ public class FutureThreadPoolDemo {
 
         long endTime = System.currentTimeMillis();
 
-        System.out.println("Total cost time = " + (endTime - startTime) + "ms");
+        System.out.println("Total cost time = " + (endTime - startTime) + "ms");    // Total cost time = 1511ms
         System.out.println(Thread.currentThread().getName() + " ends");
     }
 }

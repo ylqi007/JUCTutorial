@@ -13,9 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-/**
- *
- */
+
 public class CompletableFutureMallDemo {
 
     /**
@@ -47,6 +45,9 @@ public class CompletableFutureMallDemo {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 一个线程，顺序执行
+     */
     @Test
     public void testGetPricesStepByStep() {
         long startTime = System.currentTimeMillis();
@@ -93,7 +94,7 @@ public class CompletableFutureMallDemo {
 @NoArgsConstructor
 @Data
 class NetMall {
-    private String netMallName; // JD, PDD, TB...
+    private String netMallName; // JD, PDD, TB...，电商网站名字
 
     public double calculatePrice(String productName) {
         try {

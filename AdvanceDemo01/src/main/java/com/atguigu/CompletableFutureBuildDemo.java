@@ -5,17 +5,22 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.*;
 
+/**
+ * CompletableFuture.runAsync() 无返回值
+ * CompletableFuture.supplyAsync() 有返回值
+ */
 public class CompletableFutureBuildDemo {
 
     /**
      * Use default thread pool
-     * @throws ExecutionException
-     * @throws InterruptedException
+     * CompletableFuture.runAsync(Runnable runnable)
+     *  无参数
+     *  无返回值
      */
     @Test
     public void testCompletableFuture01() throws ExecutionException, InterruptedException {
         CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
-            System.out.println(Thread.currentThread().getName());   // ForkJoinPool.commonPool-worker-1
+            System.out.println(Thread.currentThread().getName());   // ForkJoinPool.commonPool-worker-1, 默认线程池
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
@@ -28,14 +33,12 @@ public class CompletableFutureBuildDemo {
 
     /**
      * Use specific thread pool defined by user
-     * @throws ExecutionException
-     * @throws InterruptedException
      */
     @Test
     public void testCompletableFuture02() throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
         CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
-            System.out.println(Thread.currentThread().getName());
+            System.out.println(Thread.currentThread().getName());   // pool-1-thread-1，使用用户自定义线程池
             try {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
@@ -48,6 +51,11 @@ public class CompletableFutureBuildDemo {
         threadPool.shutdown();
     }
 
+    /**
+     * CompletableFuture.supplyAsync()
+     *  无参数
+     *  有返回值
+     */
     @Test
     public void testCompletableFuture03() throws ExecutionException, InterruptedException {
         CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> {
@@ -57,7 +65,7 @@ public class CompletableFutureBuildDemo {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return "Task is done";
+            return "Task is done";  // 有返回值
         });
 
         System.out.println(stringCompletableFuture.get());

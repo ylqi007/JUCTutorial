@@ -17,6 +17,14 @@ import java.util.concurrent.CompletableFuture;
  */
 public class CompletableFutureAPI3Demo {
 
+    @Test
+    public void test00() {
+        System.out.println(CompletableFuture.supplyAsync(() -> "ResultA").thenRun(() -> {}).join());    // null
+//        System.out.println(CompletableFuture.supplyAsync(() -> "ResultA").thenAccept(r -> System.out.println(r)).join());
+        System.out.println(CompletableFuture.supplyAsync(() -> "ResultA").thenAccept(System.out::println).join());  // ReulstA, null
+        System.out.println(CompletableFuture.supplyAsync(() -> "ResultA").thenApply(r -> r + " ResultB").join());
+    }
+
 
     // 任务A执行完执行B，B需要A的结果，同时任务B有返回值
     @Test

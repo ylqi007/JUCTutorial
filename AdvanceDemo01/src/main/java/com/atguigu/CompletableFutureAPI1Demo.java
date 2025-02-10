@@ -129,7 +129,7 @@ public class CompletableFutureAPI1Demo {
         });
 
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(3); // 1s or 3s
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

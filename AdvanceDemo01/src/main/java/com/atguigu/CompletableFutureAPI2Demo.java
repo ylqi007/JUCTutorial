@@ -65,18 +65,18 @@ public class CompletableFutureAPI2Demo {
         }).thenApply(f -> {
             // int i = 10 / 0;  // 当前步骤有异常，运行叫停. 不会执行后续的 thenApply，也不会执行 whenComplete，直接到 exceptionally
             System.out.println("Step 2: 做鱼");
-            return f + "\n" + "Step 2: 做完鱼了";
+            return f + " -> " + "Step 2: 做完鱼了";
         }).thenApply(f -> {
             // int i = 10 / 0;  // 当前步骤有异常，运行叫停. 不会执行后续的 thenApply，也不会执行 whenComplete，直接到 exceptionally
             System.out.println("Step 3: 吃鱼");
-            return f + "\n" + "Step 3: 吃完鱼了";
+            return f + " -> " + "Step 3: 吃完鱼了";
         }).whenComplete((v, e) -> {
             if(e == null) {
                 System.out.println("吃饭结束，步骤回顾：\n" + v);
             }
         }).exceptionally(e -> {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            System.out.println("e.getMessage() = " + e.getMessage());
             return null;
         });
 
@@ -103,20 +103,20 @@ public class CompletableFutureAPI2Demo {
             System.out.println("Step 1: 买鱼");
             return "Step 1: 买完鱼了";
         }).handle((f, e) -> {
-            // int i = 10 / 0; // 这步有异常，无法处理result1，并返回结果。但是 Step3 还可以继续
+            int i = 10 / 0; // 这步有异常，无法处理result1，并返回结果。但是 Step3 还可以继续
             System.out.println("Step 2: 做鱼");
-            return f + "\n" + "Step 2: 做完鱼了";
+            return f + " -> " + "Step 2: 做完鱼了";
         }).handle((f, e) -> {
-            int i = 10 / 0;  // 这步有异常，无法处理result1，并返回结果。直接到 exceptionally
+            // int i = 10 / 0;  // 这步有异常，无法处理result1，并返回结果。直接到 exceptionally
             System.out.println("Step 3: 吃鱼");
-            return f + "\n" + "Step 3: 吃完鱼了";
+            return f + " -> " + "Step 3: 吃完鱼了";
         }).whenComplete((v, e) -> {
             if(e == null) {
                 System.out.println("吃饭结束，步骤回顾：\n" + v);
             }
         }).exceptionally(e -> {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            System.out.println("e.getMessage() = " + e.getMessage());
             return null;
         });
 
