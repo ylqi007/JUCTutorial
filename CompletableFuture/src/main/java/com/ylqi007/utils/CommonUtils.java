@@ -3,8 +3,7 @@ package com.ylqi007.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 
@@ -19,9 +18,13 @@ public final class CommonUtils {
 
     // 读取制定路径的文件
     public static String readFile(String filePath) {
-        try {
-            return Files.readString(Paths.get(filePath));
-        } catch (IOException e) {
+        try (InputStream is = CommonUtils.class.getClassLoader().getResourceAsStream(filePath)) {
+            if (is == null) {
+                throw new IOException("找不到资源文件: " + filePath);
+            }
+            return new String(is.readAllBytes());
+        } catch (Exception e) {
+            // TODO: handle exception
             e.printStackTrace();
             return StringUtils.EMPTY;
         }
