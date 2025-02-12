@@ -10,3 +10,10 @@ CompletableFuture 相对于 Future 具有以下优势
 2. supplyAsync
 3. 异步任务中的线程池
 4. 异步编程思想
+
+### runAsync() 是并发还是并行执行？
+* `CompletableFuture/src/main/java/com/ylqi007/createcompletablefuture/RunAsyncDemo03.java`
+
+* 单核CPU：两个线程使用同一个core，两个线程轮流使用一个CPU core --> 并发
+* 多核CPU：core1 处理 main 线程，core2 处理 ForkJoinPool.common-worker-1 线程 --> 异步任务并行执行
+* 重点：作为开发者，只要清楚如何开启异步任务，CPU硬件会把异步任务合理分配给CPU上的 core 处理
