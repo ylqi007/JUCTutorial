@@ -1,4 +1,4 @@
-package com.ylqi007.demo01;
+package com.ylqi007._01_future_vs_completablefuture;
 
 import com.ylqi007.utils.CommonUtils;
 

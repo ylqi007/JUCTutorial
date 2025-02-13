@@ -1,4 +1,4 @@
-package com.ylqi007.createcompletablefuture;
+package com.ylqi007._02_completablefuture_create;
 
 
 import com.ylqi007.utils.CommonUtils;

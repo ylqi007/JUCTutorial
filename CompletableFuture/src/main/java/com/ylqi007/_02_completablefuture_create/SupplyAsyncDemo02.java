@@ -1,11 +1,10 @@
-package com.ylqi007.createcompletablefuture;
+package com.ylqi007._02_completablefuture_create;
 
 
 import com.ylqi007.utils.CommonUtils;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 
 public class SupplyAsyncDemo02 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
