@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +54,7 @@ public final class CommonUtils {
     public static void printThreadLog(String message) {
         // 时间戳 | 线程id | 线程名 | 日志信息
         String result = new StringJoiner(" | ")
-                .add(String.valueOf(System.currentTimeMillis()))
+                .add(getCurrentTime())
                 .add(String.format("%2d", Thread.currentThread().getId()))
                 .add(Thread.currentThread().getName())
                 .add(message)
@@ -60,4 +62,8 @@ public final class CommonUtils {
         System.out.println(result);
     }
 
+    private static String getCurrentTime() {
+        LocalTime now = LocalTime.now();
+        return now.format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS"));
+    }
 }

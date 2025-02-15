@@ -27,6 +27,8 @@ public class ThenApplyAsyncDemo01 {
             return CommonUtils.readFile("filter_words.txt");
             // return "尼玛, NB, tmd, TMD";
         }).thenApply(content -> {
+            // 一般而言，thenApply()执行的任务和supplyAsync()任务可以使用同一线程执行
+            // 如果 supplyAsync() 任务立即返回结果，则 thenApply() 的任务在主线程中执行。
             CommonUtils.printThreadLog("把文件内容转换为 String[]");
             return content.split(",");
         });
