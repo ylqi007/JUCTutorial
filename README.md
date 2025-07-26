@@ -7,8 +7,8 @@
 
 
 ## Reference
-* B站: [【尚硅谷】大厂必备技术之JUC并发编程](https://www.bilibili.com/video/BV1Kw411Z7dF/?spm_id_from=333.337.search-card.all.click&vd_source=bd5e1cdd20d83feef8e77a781b33f083) (基础版本)
-* B站: [尚硅谷JUC并发编程与源码分析（对标阿里P6-P7）](https://www.bilibili.com/video/BV1ar4y1x727/?spm_id_from=333.337.search-card.all.click&vd_source=bd5e1cdd20d83feef8e77a781b33f083) (进阶版本)
+* B站: [【尚硅谷】大厂必备技术之JUC并发编程](https://www.bilibili.com/video/BV1Kw411Z7dF) (基础篇)
+* B站: [尚硅谷JUC并发编程与源码分析（对标阿里P6-P7）](https://www.bilibili.com/video/BV1ar4y1x727/) (进阶篇)
   * 📒笔记: [语雀：JUC并发编程](https://www.yuque.com/gongxi-wssld/csm31d)
   * 脑图：[GitHub: JUC_Advance](https://github.com/hao888TUV/JUC_Advance)
 * GitHub: https://github.com/shuhongfan/JUC

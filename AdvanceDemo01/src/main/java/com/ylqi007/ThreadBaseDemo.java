@@ -1,4 +1,4 @@
-package com.atguigu;
+package com.ylqi007;
 
 public class ThreadBaseDemo {
     public static void main(String[] args) {

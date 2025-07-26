@@ -1,4 +1,4 @@
-package com.atguigu.mall;
+package com.ylqi007.mall;
 
 
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;

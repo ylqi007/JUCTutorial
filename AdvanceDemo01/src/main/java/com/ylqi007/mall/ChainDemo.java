@@ -1,4 +1,4 @@
-package com.atguigu.mall;
+package com.ylqi007.mall;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +17,7 @@ public class ChainDemo {
 
         System.out.println(student);
 
+        // 链式调用，是一种新的语法
         student.setId(12).setName("张三").setMajor("Math");
 
         CompletableFuture<Student> studentCompletableFuture = CompletableFuture.supplyAsync(() -> {
@@ -32,7 +33,7 @@ public class ChainDemo {
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Accessors(chain = true)
+@Accessors(chain = true)    // 链式调用
 class Student {
     private Integer id;
     private String name;

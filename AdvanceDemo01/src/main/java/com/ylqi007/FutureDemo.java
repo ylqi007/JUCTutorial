@@ -1,7 +1,6 @@
-package com.atguigu;
+package com.ylqi007;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 public class FutureDemo {
