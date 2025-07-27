@@ -8,15 +8,18 @@ import java.util.concurrent.locks.ReentrantLock;
  *  Step 2. 创建多个线程，调用资源类得操作方法
  * @Author: ylqi007
  * @Create: 11/22/24 22:56
+ *
+ * https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/ReentrantLock.html
  */
 
-public class LSaleTickets {
+public class LSellTickets {
 
 
     public static void main(String[] args) {
 
         Ticket ticket = new Ticket();
         //创建三个线程
+        // Runnable是函数式接口，可以用Lambda表达式的写法
         // Thread t1: AA
         new Thread(() -> {
             //调用卖票得方法
@@ -47,7 +50,7 @@ public class LSaleTickets {
 // Step 1.创建资源类 定义属性和操作方法
 class Ticket {
     // 创建可重入锁, ReentrantLock
-    private static ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     // 属性: 票数
     private int number = 30;

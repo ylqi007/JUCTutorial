@@ -23,16 +23,17 @@ A thread can be in one of the following states:
 * `NEW`           A thread that has not yet started is in this state.
 * `RUNNABLE`      A thread executing in the Java virtual machine is in this state.
 * `BLOCKED`       A thread that is blocked waiting for a monitor lock is in this state.
-* `WAITING`       A thread that is waiting indefinitely for another thread to perform a particular action is in this state.
-* `TIMED_WAITING` A thread that is waiting for another thread to perform an action for up to a specified waiting time is in this state.
+* `WAITING`       A thread that is waiting indefinitely for another thread to perform a particular action is in this state. (不见不散)
+* `TIMED_WAITING` A thread that is waiting for another thread to perform an action for up to a specified waiting time is in this state. (过时不候)
 * `TERMINATED`    A thread that has exited is in this state.
 
 A thread can be in only one state at a given point in time. These states are virtual machine states which do not reflect any operating system thread states.
 
 ### 1.3.2 wait/sleep 的区别
-1. sleep 会占用锁睡觉
-2. wait 会释放锁睡觉
-3. 都可以被 interrupted 打断
+1. `sleep()` 是 Thread 的静态方法；`wait()` 是 Object 的方法，任何对象实例都能调用。
+2. `sleep()` 不会释放锁，也不需要占用锁。`wait()` 会释放锁，但调用它的前提是当前线程占有锁(即代码要在`synchronized`中)。 
+3. 都可以被 interrupted 打断。在哪里睡，就在哪里醒。
+
 
 ## 1.4 并发与并行
 ### 1.4.1 串行模式
@@ -42,11 +43,15 @@ A thread can be in only one state at a given point in time. These states are vir
 并行的效率从代码层次上强依赖于多进程/多线程代码，从硬件角度上则依赖于多核 CPU。
 
 ### 1.4.3 并发 (concurrent)
-并发(concurrent)指的是多个程序可以同时运行的现象，更细化的是多进程可以同时运行或者多指令可以同时运行。
+~~并发(concurrent)指的是多个程序可以同时运行的现象，更细化的是多进程可以同时运行或者多指令可以同时运行。~~
+并发(concurrent)是同一时刻，多个线程在访问同一个资源，多个线程对一个点。
+* 春运抢票(多人抢同一个资源，即票)
+* 电商秒杀(多人抢多一个资源，商品)
+
 
 ### 1.4.4 总结
 * 串行：一次只能执行一个
-* 并发：同一时刻，多个线程访问同一资源
+* 并发：同一时刻，**多个线程**访问同一资源
 * 并行：多项工作一起执行，之后再汇总
 
 ## 1.5 管程 (Monitor, 监视器，锁)
@@ -55,6 +60,7 @@ A thread can be in only one state at a given point in time. These states are vir
 * 管程 (monitor) 是保证了同一时刻只有一个进程在管程内活动,即管程内定义的操作在同一时刻只被一个进程调用(由编译器实现)，但是这样并不能保证进程以设计的顺序执行
 * JVM 中同步是基于进入和退出管程 (monitor) 对象实现的，每个对象都会有一个管程 (monitor) 对象，管程 (monitor) 会随着 java 对象一同创建和销毁
 * 执行线程首先要持有管程对象，然后才能执行方法，当方法完成之后会释放管程，方法在执行时候会持有管程，其他线程无法再获取同一个管程
+
 
 ## 1.6 用户线程，守护线程
 * 用户线程：平时用到的普通线程,自定义线程

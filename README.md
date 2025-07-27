@@ -1,5 +1,38 @@
 # JUCTutorial
 
+## 结构说明
+```shell
+➜  JUCTutorial git:(main) ✗ tree -L 2
+.
+├── AdvanceDemo01
+│   ├── pom.xml
+│   ├── src
+│   └── target
+├── CompletableFuture
+│   ├── ReadMe.md
+│   ├── pom.xml
+│   ├── src
+│   └── target
+├── Draft.md
+├── README.md
+├── demo01
+│   ├── pom.xml
+│   ├── src
+│   └── target
+├── docs
+│   ├── Chap01.JUC概述.md
+│   ├── Chap02.Lock接口.md
+│   ├── Chap03.线程间的通信.md
+│   ├── CompletableFuture异步编程
+│   ├── CompletableFuture异步编程.rar
+│   ├── JUC.mmap
+│   ├── others
+│   ├── 尚硅谷高级技术之JUC高并发编程.pdf
+│   ├── 尚硅谷高级技术之JUC高并发编程.xmind
+│   └── 进程与线程的区别.md
+└── pom.xml
+```
+
 
 
 视频正确食用方法：了解知识点，然后自己通过源码或者查找资料完善
