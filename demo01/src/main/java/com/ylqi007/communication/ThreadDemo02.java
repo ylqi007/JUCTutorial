@@ -50,6 +50,3 @@ public class ThreadDemo02 {
         }, "DD").start();
     }
 }
-
-
-

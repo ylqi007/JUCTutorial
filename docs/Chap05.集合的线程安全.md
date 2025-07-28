@@ -91,3 +91,7 @@ Example: `demo01/src/main/java/com/ylqi007/chap05/ThreadDemo04CopyOnWriteArrayLi
 
 `ConcurrentHashMap`类解决了`HashMap`的同步问题
 * Example: `demo01/src/main/java/com/ylqi007/chap05/ThreadDemo07HashMap.java`
+
+
+## Reference
+* [【JUC并发编程05】集合的线程安全](https://blog.csdn.net/xt199711/article/details/122760641?spm=1001.2014.3001.5501)
