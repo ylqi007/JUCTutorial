@@ -105,3 +105,4 @@ public interface Callable<V> {
 ## Reference
 * [老徐和阿珍的故事：Runnable和Callable有什么不同？](https://www.cnblogs.com/heihaozi/p/16049860.html)
 * [三分钟掌握 Runnable 和 Callable 异同](https://www.cnblogs.com/bestjosephine/p/18756690)
+* [48 Callable 和 Runnable 的不同？](https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%2078%20%E8%AE%B2-%E5%AE%8C/48%20Callable%20%E5%92%8C%20Runnable%20%E7%9A%84%E4%B8%8D%E5%90%8C%EF%BC%9F.md)
