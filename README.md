@@ -1,5 +1,7 @@
 # JUCTutorial
 
+视频正确食用方法：了解知识点，然后自己通过源码或者查找资料完善
+
 ## 结构说明
 ```shell
 ➜  JUCTutorial git:(main) ✗ tree -L 2
@@ -21,7 +23,7 @@
 │   └── target
 ├── docs
 │   ├── Chap01.JUC概述.md
-│   ├── Chap02.Lock接口.md
+│   ├── Chap02.synchronized关键字和Lock接口.md
 │   ├── Chap03.线程间的通信.md
 │   ├── CompletableFuture异步编程
 │   ├── CompletableFuture异步编程.rar
@@ -34,8 +36,11 @@
 ```
 
 
+## 命名习惯
+**基础篇**
+- package chap01xxx,
+- class: XxxxDemo01
 
-视频正确食用方法：了解知识点，然后自己通过源码或者查找资料完善
 
 
 
@@ -47,3 +52,4 @@
 * GitHub: https://github.com/shuhongfan/JUC
 * https://gitee.com/bzxhh/juc_atguigu
 * 读写锁那一块个人感觉讲得不好，可以看看这两篇博客，我觉得不错。https://www.jianshu.com/p/9cd5212c8841，https://segmentfault.com/a/1190000021962190
+* [【多线程】锁机制详解](https://blog.csdn.net/qq_34416331/article/details/107764522)

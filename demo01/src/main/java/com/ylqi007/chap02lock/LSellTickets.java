@@ -1,5 +1,6 @@
-package com.ylqi007.lock;
+package com.ylqi007.chap02lock;
 
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -14,21 +15,23 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LSellTickets {
 
-
     public static void main(String[] args) {
 
         Ticket ticket = new Ticket();
         //创建三个线程
         // Runnable是函数式接口，可以用Lambda表达式的写法
-        // Thread t1: AA
-        new Thread(() -> {
-            //调用卖票得方法
-            for (int i = 0; i < 40; i++) {
-                ticket.sale();
+        // Thread t1: AA，匿名内部类的实现方式
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //调用卖票得方法
+                for (int i = 0; i < 40; i++) {
+                    ticket.sale();
+                }
             }
         }, "AA").start();
 
-        // Thread t2: BB
+        // Thread t2: BB，Lambda表达式的实现方式
         new Thread(() -> {
             //调用卖票得方法
             for (int i = 0; i < 40; i++) {
@@ -50,7 +53,8 @@ public class LSellTickets {
 // Step 1.创建资源类 定义属性和操作方法
 class Ticket {
     // 创建可重入锁, ReentrantLock
-    private final ReentrantLock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
+    // private final ReentrantLock lock = new ReentrantLock(true);  // 公平锁
 
     // 属性: 票数
     private int number = 30;

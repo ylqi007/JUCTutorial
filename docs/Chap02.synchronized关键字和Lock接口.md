@@ -74,6 +74,120 @@ private final Object lock = new Object();
 > ✅一句话总结: `synchronized` = 简单好用的内置锁，保证原子性 + 可见性，但要 控制锁粒度，避免锁泄露，必要时用更灵活的 Lock 替代。
 
 
+## 2. Lock 接口
+### 1. Lock 接口的意义
+* 提供比 `synchronized` 更灵活的锁机制，可手动获取和释放。
+* 支持**可中断、可超时、公平锁、多条件变量**等高级特性。
+
+**核心方法:**
+```java
+public interface Lock {
+   void lock();                     // 阻塞获取锁
+   void lockInterruptibly();        // 可中断获取锁
+   boolean tryLock();               // 尝试获取锁（立即返回）
+   boolean tryLock(long time, TimeUnit unit); // 超时获取锁
+   void unlock();                   // 释放锁
+   Condition newCondition();        // 获取 Condition 对象
+}
+```
+
+### 2. 常用实现类
+1. `ReentrantLock`()
+   * 最常用，功能最全，支持公平锁（构造时传 `true`）
+   * 支持多 `Condition`，替代 `wait/notify`
+2. `ReentrantReadWriteLock`()
+   * 提供**读锁(共享)** + **写锁(独占)**
+   * 适合**读多写少**场景
+3. `StampedLock`()
+   * 支持**乐观读**，性能更好
+   * 非可重入锁
+
+### 3. ReentrantLock (可重入锁)
+`ReentrantLock`(可重入锁)是一种递归、无阻塞的同步机制，也叫做递归锁，指的是同一线程在外层函数获得锁之后，内层递归函数仍然可以有获取该锁的代码，但不受影响。
+`ReentrantLock` and `synchronized` 都是可重入锁。
+* Demo: [LSellTickets.java](../demo01/src/main/java/com/ylqi007/chap02lock/LSellTickets.java)
+
+### 4. 基本用法
+#### 1. 标准写法(避免死锁)
+```java
+private final Lock lock = new ReentrantLock();
+
+public void doWork() {
+    lock.lock();
+    try {
+        // 临界区
+    } finally {
+        lock.unlock(); // 必须在 finally 中释放
+    }
+}
+```
+
+#### 2. `tryLock`(避免长时间等待)
+```java
+private final Lock lock = new ReentrantLock();
+
+public void doWork() {
+   if (lock.tryLock(1, TimeUnit.SECONDS)) {
+      try {
+         // 成功获取锁
+      } finally {
+         lock.unlock();
+      }
+   } else {
+      // 获取失败的逻辑
+   }
+}
+```
+
+#### 3. `Condition`(替代 `wait/notify`)
+```java
+private final Lock lock = new ReentrantLock();
+Condition notEmpty = lock.newCondition();
+
+public void doWork() {
+   lock.lock();
+   try {
+      while (queue.isEmpty()) {
+         notEmpty.await(); // 类似 Object.wait()
+      }
+      // 处理元素
+      notEmpty.signal(); // 唤醒等待线程
+   } finally {
+      lock.unlock();
+   }
+}
+```
+
+### 5. Best Practices
+1. 始终配合 `try/finally`
+   * 确保锁一定会释放，避免死锁。
+2. 锁粒度最小化
+   * 尽量缩小加锁范围，减少性能损耗。
+3. 优先 `tryLock`
+   * 用 `tryLock()` 避免死锁，适合高并发场景。
+4. 优先 `ReentrantLock`
+   * 一般场景下用 `ReentrantLock` 替代 `synchronized`，尤其是需要**超时/可中断**的。
+5. `ReentrantReadWriteLock` and `StampledLock`
+   * **读多写少** → `ReentrantReadWriteLock`; 
+   * **乐观读场景** → `StampedLock`。
+6. 避免混用多种锁
+   * 比如同一对象既用 `synchronized` 又用 `Lock`，容易死锁。
+
+### 6. 适用场景
+* 需要超时/中断的加锁
+* 需要多个条件变量（比 wait/notify 更灵活）
+* 复杂并发控制（如生产者-消费者队列）
+* 高并发读写分离（读写锁、StampedLock）
+
+
+## Reference
+1. 可重入锁: `java.util.concurrent.locks.ReentrantLock`
+2. [【JUC并发编程02】Lock接口](https://blog.csdn.net/xt199711/article/details/122720198?spm=1001.2014.3001.5501)
+3. [java.util.concurrent.locks](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/package-summary.html)
+4. [【多线程】锁机制详解](https://blog.csdn.net/qq_34416331/article/details/107764522)
+
+
+# --- Split ---
 ---
 
 ### 1.1 synchronized 的作用范围
@@ -126,8 +240,3 @@ synchronized(this) {
 4. 通过Lock可以知道有没有成功获取锁，而synchronized不会，只会一直等待。
 5. Lock可以提高多个线程进行读操作的效率(当多个线程竞争的时候，锁会出现死锁，需要在finally块中释放锁)。
 6. Lock等待锁的线程会相应中断，而synchronized不会中断，只会一直等待。
-
-
-## Reference
-1. 可重入锁: `java.util.concurrent.locks.ReentrantLock`
-2. [【JUC并发编程02】Lock接口](https://blog.csdn.net/xt199711/article/details/122720198?spm=1001.2014.3001.5501)
