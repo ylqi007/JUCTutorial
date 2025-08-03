@@ -45,8 +45,9 @@
 
 
 ## Reference
-* B站: [【尚硅谷】大厂必备技术之JUC并发编程](https://www.bilibili.com/video/BV1Kw411Z7dF) (基础篇)
-* B站: [尚硅谷JUC并发编程与源码分析（对标阿里P6-P7）](https://www.bilibili.com/video/BV1ar4y1x727/) (进阶篇)
+* ✅B站: [【尚硅谷】大厂必备技术之JUC并发编程](https://www.bilibili.com/video/BV1Kw411Z7dF) (基础篇)
+  * [【尚硅谷】大厂必备技术之JUC并发编程——笔记总结](https://blog.csdn.net/xt199711/article/details/123029986?spm=1001.2014.3001.5502)
+* ✅B站: [尚硅谷JUC并发编程与源码分析（对标阿里P6-P7）](https://www.bilibili.com/video/BV1ar4y1x727/) (进阶篇)
   * 📒笔记: [语雀：JUC并发编程](https://www.yuque.com/gongxi-wssld/csm31d)
   * 脑图：[GitHub: JUC_Advance](https://github.com/hao888TUV/JUC_Advance)
 * GitHub: https://github.com/shuhongfan/JUC
