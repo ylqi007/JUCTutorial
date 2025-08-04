@@ -50,7 +50,10 @@
 * ✅B站: [尚硅谷JUC并发编程与源码分析（对标阿里P6-P7）](https://www.bilibili.com/video/BV1ar4y1x727/) (进阶篇)
   * 📒笔记: [语雀：JUC并发编程](https://www.yuque.com/gongxi-wssld/csm31d)
   * 脑图：[GitHub: JUC_Advance](https://github.com/hao888TUV/JUC_Advance)
+* 
 * GitHub: https://github.com/shuhongfan/JUC
 * https://gitee.com/bzxhh/juc_atguigu
 * 读写锁那一块个人感觉讲得不好，可以看看这两篇博客，我觉得不错。https://www.jianshu.com/p/9cd5212c8841，https://segmentfault.com/a/1190000021962190
 * [【多线程】锁机制详解](https://blog.csdn.net/qq_34416331/article/details/107764522)
+* [2024最新!CompletableFuture异步编程详解一[入门]](https://blog.csdn.net/ManCxyster/article/details/135283796)
+* [Java 并发编程 78 讲-完](https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%2078%20%E8%AE%B2-%E5%AE%8C)

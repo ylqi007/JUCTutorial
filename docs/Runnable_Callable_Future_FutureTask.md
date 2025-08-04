@@ -24,6 +24,7 @@ public interface Callable<V> {
 
 ## Future
 ```java
+// Since 1.5
 public interface Future<V> {
     boolean cancel(boolean mayInterruptIfRunning);  // 取消任务
     boolean isCancelled();  // 判断任务是否已经取消
@@ -42,6 +43,7 @@ public interface Future<V> {
 
 ## RunnableFuture
 ```java
+// Since 1.6
 public interface RunnableFuture<V> extends Runnable, Future<V> {
     void run();
 }
@@ -55,6 +57,7 @@ public interface RunnableFuture<V> extends Runnable, Future<V> {
 
 ## FutureTask
 ```java
+// Since 1.5
 public class FutureTask<V> implements RunnableFuture<V> {
     /** The underlying callable; nulled out after running */
     private Callable<V> callable;
@@ -88,4 +91,3 @@ public class FutureTask<V> implements RunnableFuture<V> {
 
 ## Reference
 * [一次搞懂 Runnable、Callable、Future、FutureTask，不懂不要钱！](https://blog.csdn.net/AlbenXie/article/details/108730675)
-* 
