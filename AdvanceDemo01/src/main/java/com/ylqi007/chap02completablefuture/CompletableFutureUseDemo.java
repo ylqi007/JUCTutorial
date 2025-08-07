@@ -1,4 +1,4 @@
-package com.ylqi007;
+package com.ylqi007.chap02completablefuture;
 
 import org.junit.jupiter.api.Test;
 
@@ -86,7 +86,7 @@ public class CompletableFutureUseDemo {
                 return result;
             }, threadPool).whenComplete((result, ex) -> {
                 if (ex == null) {
-                    System.out.println(Thread.currentThread().getName() + "计算完成，更新value=" + result);
+                    System.out.println(Thread.currentThread().getName() + " 计算完成，更新value=" + result);
                 }
                 System.out.println(Thread.currentThread().getName() + " 进入 whenComplete() 方法");
             }) .exceptionally(e -> {

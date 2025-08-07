@@ -1,4 +1,4 @@
-package com.ylqi007;
+package com.ylqi007.chap02completablefuture;
 
 
 import org.junit.jupiter.api.Test;
@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.*;
 
 /**
- * CompletableFuture.runAsync() 无返回值
- * CompletableFuture.supplyAsync() 有返回值
+ * CompletableFuture.runAsync(Runnable) 无返回值
+ * CompletableFuture.supplyAsync(Supplier) 有返回值
  */
 public class CompletableFutureBuildDemo {
 
     /**
-     * Use default thread pool
+     * Use default thread pool: ForkJoinPool
      * CompletableFuture.runAsync(Runnable runnable)
      *  无参数
      *  无返回值
@@ -28,11 +28,11 @@ public class CompletableFutureBuildDemo {
             }
         });
 
-        System.out.println(completableFuture.get());
+        System.out.println(completableFuture.get());    // null
     }
 
     /**
-     * Use specific thread pool defined by user
+     * Use specific thread pool defined by user: pool-1-thread-1
      */
     @Test
     public void testCompletableFuture02() throws ExecutionException, InterruptedException {
@@ -46,7 +46,7 @@ public class CompletableFutureBuildDemo {
             }
         }, threadPool);
 
-        System.out.println(voidCompletableFuture.get());
+        System.out.println(voidCompletableFuture.get());    // null
 
         threadPool.shutdown();
     }

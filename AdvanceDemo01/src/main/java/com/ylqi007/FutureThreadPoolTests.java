@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.*;
 
-public class FutureThreadPoolDemo {
+public class FutureThreadPoolTests {
 
     // Use multi thread
     @Test
