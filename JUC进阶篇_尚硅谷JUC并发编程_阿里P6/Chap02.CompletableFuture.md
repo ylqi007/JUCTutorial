@@ -81,6 +81,41 @@ public interface Future<V> {
   * `Future`能干的，`CompletableFuture`都能干
 
 
+## 3. CompletableFuture 对 Future 的改进
+### 3.1 CompletableFuture 为什么会出现
+* `get()` 方法在 `Future` 计算完成之前会一直处在**阻塞**状态下，**阻塞的方式和异步编程的设计理念相违背**。
+* `isDone()` 方法容易消耗CPU资源(CPU空转)。
+* 对于真正的异步处理我们希望是可以通过**传入回调函数**，在 `Future` 结束时**自动调用该回调函数**，这样，我们就不用等待结果。
+
+JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察者模式**类似的机制，可以让任务执行完成后通知监听的一方。
+
+### 3.2 CompletableFuture 和 CompletionStage 介绍
+架构说明
+![Runnable_Callable_FutureTask_CompletableFuture.png](images/Runnable_Callable_FutureTask_CompletableFuture.png)
+
+* **接口CompletionStage**
+  * 代表异步计算过程中的某一个阶段，一个阶段完成以后可能会触发另外一个阶段。
+  * 一个阶段的执行可能是被单个阶段的完成触发，也可能是由多个阶段一起触发。
+* **CompletableFuture类**
+  * 提供了非常强大的`Future`的扩展功能，可以帮助我们简化异步编程的复杂性，并且提供了函数式编程的能力，可以**通过回调的方式处理计算结果**，也提供了转换和组合CompletableFuture的方法。
+  * 它可能代表一个明确完成的`Future`，也可能代表一个完成阶段(`CompletionStage`)，它支持在计算完成以后触发一些函数或执行某些动作。
+
+### 3.3 核心的四个静态方法，来创建一个异步任务
+四个静态构造方法
+![runAsync_supplyAsync.png](images/runAsync_supplyAsync.png)
+对于上述`Executor`参数说明：若没有指定，则使用默认的`ForkJoinPool.commonPool()`作为它的线程池执行异步代码，如果指定线程池，则使用我们自定义的或者特别指定的线程池执行异步代码。
+* [CompletableFutureBuildTests.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureBuildTests.java)
+* `CompletableFuture` 减少阻塞和轮询，可以传入回调对象，当异步任务完成或者发生异常时，自动调用回调对象的回调方法。
+
+
+
+## 4. 案例精讲 -- 电商网站的比价需求
+### 4.1 函数式编程
+
+### 4.2 join() vs get()
+
+### 4.3 大厂业务需求说明
+
 
 
 

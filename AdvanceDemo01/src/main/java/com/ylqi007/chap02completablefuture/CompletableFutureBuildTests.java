@@ -3,13 +3,22 @@ package com.ylqi007.chap02completablefuture;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
- * CompletableFuture.runAsync(Runnable) 无返回值
- * CompletableFuture.supplyAsync(Supplier) 有返回值
+ * runAsync() + Runnable ==> 无返回值
+ *  * CompletableFuture.runAsync(Runnable)
+ *  * CompletableFuture.runAsync(Runnable, Executor)
+ *
+ * supplyAsync() + Supplier ==> 有返回值
+ *  * CompletableFuture.supplyAsync(Supplier)
+ *  * CompletableFuture.supplyAsync(Supplier, Executor)
  */
-public class CompletableFutureBuildDemo {
+public class CompletableFutureBuildTests {
 
     /**
      * Use default thread pool: ForkJoinPool
@@ -18,7 +27,7 @@ public class CompletableFutureBuildDemo {
      *  无返回值
      */
     @Test
-    public void testCompletableFuture01() throws ExecutionException, InterruptedException {
+    public void testRunAsync() throws ExecutionException, InterruptedException {
         CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
             System.out.println(Thread.currentThread().getName());   // ForkJoinPool.commonPool-worker-1, 默认线程池
             try {
@@ -35,7 +44,7 @@ public class CompletableFutureBuildDemo {
      * Use specific thread pool defined by user: pool-1-thread-1
      */
     @Test
-    public void testCompletableFuture02() throws ExecutionException, InterruptedException {
+    public void testRunAsyncWithExecutor() throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
         CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
             System.out.println(Thread.currentThread().getName());   // pool-1-thread-1，使用用户自定义线程池
@@ -52,12 +61,12 @@ public class CompletableFutureBuildDemo {
     }
 
     /**
-     * CompletableFuture.supplyAsync()
+     * CompletableFuture.supplyAsync(), 使用默认 ForkJoinPool.commonPool-worker-1
      *  无参数
      *  有返回值
      */
     @Test
-    public void testCompletableFuture03() throws ExecutionException, InterruptedException {
+    public void testSupplyAsync() throws ExecutionException, InterruptedException {
         CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> {
             System.out.println(Thread.currentThread().getName());   // ForkJoinPool.commonPool-worker-1
             try {
@@ -71,8 +80,11 @@ public class CompletableFutureBuildDemo {
         System.out.println(stringCompletableFuture.get());
     }
 
+    /**
+     * 使用自定义的线程池，线程名为 pool-1-thread-1
+     */
     @Test
-    public void testCompletableFuture04() throws ExecutionException, InterruptedException {
+    public void testSupplyAsyncExecutor() throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
         CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> {
             System.out.println(Thread.currentThread().getName());   // pool-1-thread-1
