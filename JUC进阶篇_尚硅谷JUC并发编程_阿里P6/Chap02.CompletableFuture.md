@@ -151,9 +151,12 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 
 ### 5.3 对计算结果进行消费: `thenAccept(Consumer)`
 接受任务的处理结果，并消费处理，无返回结果。
-* thenRun(Runnable)
-* thenAccept(Consumer)
-* thenApply(Function)
+* `thenAccept(Consumer)`: 任务A执行完执行B，B需要A的结果，但是任务B没有返回值
+* 对比补充
+  * `thenRun(Runnable)`: 任务A执行完执行B，并且B不需要A的结果，相当于新起了线程任务
+  * `thenApply(Function)` : 任务A执行完执行B，B需要A的结果，同时任务B有返回值
+* 测试代码: [CompletableFutureAPI3AcceptRunApplyTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI3AcceptRunApplyTest.java)
+
 
 #### CompletableFuture + ThreadPool
 * thenRunAsync(Runnable)
