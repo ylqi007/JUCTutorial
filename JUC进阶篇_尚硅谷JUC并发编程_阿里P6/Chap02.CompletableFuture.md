@@ -158,10 +158,6 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 * 测试代码: [CompletableFutureAPI3AcceptRunApplyTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI3AcceptRunApplyTest.java)
 
 
-#### CompletableFuture + ThreadPool
-* thenRunAsync(Runnable)
-* thenAcceptAsync(Consumer)
-* thenApplyAsync(Function)
 
 
 
@@ -178,6 +174,19 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 * 
 
 
+### ✅ CompletableFuture和线程池结合使用说明
+* `thenRunAsync(Runnable)`
+* `thenAcceptAsync(Consumer)`
+* `thenApplyAsync(Function)`
+* 测试代码(只集中测试了`thenRunAsync()`): [CompletableFutureAPI3ThenRunAsyncWithThreadPoolTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI3ThenRunAsyncWithThreadPoolTest.java)
+
+**总结说明:**
+* 如果没有传入自定义线程池，都用默认线程池 `ForkJoinPool`
+* 如果你执行第一个任务时，传入了一个自定义线程池
+  * 调用 `thenRun()` 方法执行第二个任务时，则第二个任务和第一个任务时共用同一个线程池
+  * 调用 `thenRunAsync()` 执行第二个任务时，则第一个任务使用的是你自定义的线程池，第二个任务使用的是 `ForkJoinPool` 线程池
+* **备注**: 可能是线程处理太快，系统优化切换原则，直接使用`main`线程处理，`thenAccept()`和`thenAcceptAsync()`，`thenApply()`和`thenApplyAsync()`等，之间的区别同理。
+  * 方法名后面有无`Async`的区别是，有`Async`的方法在底层会调用`uniRunStage(asyncPool,action);`方法，将线程池更改为`ForkJoinPool`而不是自定义线程池
 
 
 
