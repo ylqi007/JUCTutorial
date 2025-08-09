@@ -139,19 +139,14 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 
 
 ### 5.2 对计算结果进行处理: `thenApply()`, `handle()`
-
-#### 1. thenApply()
-* 计算结果存在**依赖关系**，这两个线程**串行化**。
-* 由于存在依赖关系（当前步错，不会进入下一步），当前步骤有异常的话就叫停。
-* 
-
-#### 2. handle()
-* 有异常也也以往下一步走，根据带的异常参数可以进入下一步处理。
-
-
-1. thenApply()：
-2. handle()
-3. 总结
+1. `thenApply()`
+   * 计算结果存在**依赖关系**，这两个线程**串行化**。
+   * 由于存在依赖关系（当前步错，不会进入下一步），当前步骤有异常的话就叫停。
+     * 出异常的步骤 --> `whenComplete()` --> `exceptionally()`
+2. `handle()`
+   * 计算结果存在**依赖关系**，这两个线程**串行化**。
+   * 有异常也也以往下一步走，根据带的异常参数可以进入下一步处理。
+3. 测试代码: [CompletableFutureAPI2ThenApplyHandleTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI2ThenApplyHandleTest.java)
 
 
 ### 5.3 对计算结果进行消费: `thenAccept(Consumer)`
