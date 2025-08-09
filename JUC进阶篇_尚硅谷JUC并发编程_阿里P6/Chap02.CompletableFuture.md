@@ -117,9 +117,67 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 ### 4.3 大厂业务需求说明
 
 
+## 5. CompletableFuture 常用方法
+1. 获得计算结果和触发计算
+2. 对计算结果进行处理
+3. 对计算结果进行消费
+4. 对计算速度进行选用
+5. 对计算结果进行合并
+
+
+### 5.1 获得计算结果和触发计算
+#### 1. 获得计算结果
+* `public T get()`  
+* `public T get(long timeout, TimeUnit unit)`
+* `public T join()`: 和get一样的作用，只是不需要抛出异常
+* `public T getNow(T valueIfAbsent)`: 计算完成就返回正常值，否则返回备胎值（传入的参数），立即获取结果不阻塞
+
+#### 2. 主动触发计算
+* `public boolean complete(T value)`: 是否打断 `get()` 方法立即返回括号中的值
+
+测试代码: [CompletableFutureAPI1GetJoinCompleteTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI1GetJoinCompleteTest.java)
+
+
+### 5.2 对计算结果进行处理: `thenApply()`, `handle()`
+
+#### 1. thenApply()
+* 计算结果存在**依赖关系**，这两个线程**串行化**。
+* 由于存在依赖关系（当前步错，不会进入下一步），当前步骤有异常的话就叫停。
+* 
+
+#### 2. handle()
+* 有异常也也以往下一步走，根据带的异常参数可以进入下一步处理。
+
+
+1. thenApply()：
+2. handle()
+3. 总结
+
+
+### 5.3 对计算结果进行消费: `thenAccept(Consumer)`
+接受任务的处理结果，并消费处理，无返回结果。
+* thenRun(Runnable)
+* thenAccept(Consumer)
+* thenApply(Function)
+
+#### CompletableFuture + ThreadPool
+* thenRunAsync(Runnable)
+* thenAcceptAsync(Consumer)
+* thenApplyAsync(Function)
 
 
 
+### 5.4 对计算速度进行选用
+* applyToEither
+* [CompletableFutureAPI4ApplyToEitherTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/CompletableFutureAPI4ApplyToEitherTest.java)
+
+
+### 5.5 对计算结果进行选用
+两个 CompletionStage 任务都完成后，最终把两个任务的结果一起交给 thenCombine 来处理。
+先完成的先等着，等待其他分支任务。
+
+* thenCombine()
+* 
 
 
 
