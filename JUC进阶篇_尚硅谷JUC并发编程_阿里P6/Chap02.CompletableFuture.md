@@ -164,11 +164,11 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 
 
 ### 5.5 对计算结果进行选用
-两个 CompletionStage 任务都完成后，最终把两个任务的结果一起交给 thenCombine 来处理。
+两个 `CompletionStage` 任务都完成后，最终把两个任务的结果一起交给 `thenCombine()` 来处理。
 先完成的先等着，等待其他分支任务。
 
-* thenCombine()
-* 
+* `thenCombine(CompletionStage, BiFunction)`
+* 测试代码: [CompletableFutureAPI5ThenCombineTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI5ThenCombineTest.java)
 
 
 ### ✅ CompletableFuture和线程池结合使用说明
