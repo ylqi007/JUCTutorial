@@ -1,4 +1,4 @@
-package com.ylqi007.mall;
+package com.ylqi007.chap02completablefuture.mall;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

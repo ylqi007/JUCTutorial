@@ -1,4 +1,4 @@
-package com.ylqi007.mall;
+package com.ylqi007.chap02completablefuture.mall;
 
 
 import com.ylqi007.utils.CommonUtils;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 

@@ -147,7 +147,7 @@ String result = new StringBuilder()
 2. 流式API：Java8 的 `Stream` API 就是典型的链式调用
 3. JDBC/ORM 操作
 
-案例代码: [ChainDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/mall/ChainDemo.java)
+案例代码: [ChainDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/mall/ChainDemo.java)
 
 
 ### 4.2 大厂业务需求说明
@@ -166,7 +166,7 @@ String result = new StringBuilder()
 
 
 ### 4.3 比价案例实战Case
-* 测试代码: [CompletableFutureMallDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/mall/CompletableFutureMallDemo.java)
+* 测试代码: [CompletableFutureMallDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/mall/CompletableFutureMallDemo.java)
 
 
 ## 5. CompletableFuture 常用方法
