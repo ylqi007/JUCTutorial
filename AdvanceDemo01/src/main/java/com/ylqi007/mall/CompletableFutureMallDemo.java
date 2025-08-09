@@ -1,6 +1,7 @@
 package com.ylqi007.mall;
 
 
+import com.ylqi007.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class CompletableFutureMallDemo {
      * 使用 2 * random double + (Double)'M' 作为最终 price
      */
     @Test
-    public void test01() {
+    public void testCalculatePrice() {
         System.out.println(ThreadLocalRandom.current().nextDouble() * 2);   // 1.1272062927932116
         System.out.println(ThreadLocalRandom.current().nextDouble() * 2 + "MySQL".charAt(0));   // 77.23760800329585
     }
@@ -46,6 +47,7 @@ public class CompletableFutureMallDemo {
 
     /**
      * 一个线程，顺序执行
+     * Total cost time : 5021 milliseconds
      */
     @Test
     public void testGetPricesStepByStep() {
@@ -77,6 +79,9 @@ public class CompletableFutureMallDemo {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Total cost time : 1012 milliseconds
+     */
     @Test
     public void testGetPricesByCompletableFuture() {
         long startTime = System.currentTimeMillis();
@@ -96,11 +101,8 @@ class NetMall {
     private String netMallName; // JD, PDD, TB...，电商网站名字
 
     public double calculatePrice(String productName) {
-        try {
-            TimeUnit.SECONDS.sleep(1);  // 计算一本书的价格需要 1s
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        CommonUtils.sleepSeconds(1);    // 计算一本书的价格需要 1s
 
         return ThreadLocalRandom.current().nextDouble() * 2 + productName.charAt(0);
     }

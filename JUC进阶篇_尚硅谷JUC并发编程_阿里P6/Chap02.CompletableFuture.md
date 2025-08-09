@@ -107,14 +107,66 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 * [CompletableFutureBuildTests.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureBuildTests.java)
 * `CompletableFuture` 减少阻塞和轮询，可以传入回调对象，当异步任务完成或者发生异常时，自动调用回调对象的回调方法。
 
+#### 1. runAsync(Runnable)
+#### 2. runAsync(Runnable, Executor)
+#### 3. supplyAsync(Supplier)
+#### 4. supplyAsync(Supplier, Executor)
 
 
 ## 4. 案例精讲 -- 电商网站的比价需求
-### 4.1 函数式编程
+### 4.1 Lambda表达式 + Stream流式调用 + Chain链式调用 + Java8函数式编程
+#### 1. FunctionalInterface (函数式接口)
+`@FunctionalInterface`(函数式接口)，以下是常见的四类 functional interface
+* `Runnable`: `public abstract void run();` (`Runnable` 是 Java1.0 就存在的老接口，当时的 Java 代码风格是 显式写出所有修饰符，即使它是多余的。)
+* `Consumer<T>`: `void accept(T t);`
+  * `BiConsumer<T, U>`: `void accept(T t, U u);`
+* `Supplier<T>`: `T get();`
+  * `BiFunction<T, U, R>`: `R apply(T t, U u);`
+* `Function<T, R>`: `R apply(T t);`
 
-### 4.2 join() vs get()
+#### 2. Java链式调用 (Method chaining)
+> Java 链式调用(Method Chaining)是一种编程风格，通过在一个对象的方法中返回该对象本身(`this`)或另一个对象，使得多个方法调用可以在一行连续书写，从而形成链状调用结构。
 
-### 4.3 大厂业务需求说明
+**1.简单例子:**
+```java
+String result = new StringBuilder()
+        .append("Hello")
+        .append(" ")
+        .append("World")
+        .toString();
+```
+这里的 `append()` 方法返回的是 当前 `StringBuilder` 对象本身，所以可以连续调用。
+
+**2.核心原理:**
+* 在方法内部，`return this;`
+* 或者返回一个新的对象实例（可以是同类型，也可以是不同类型）
+* 编译器会在每次调用时，将返回值继续作为下一个方法的调用者。
+
+**3.常见用途:**
+1. 构造器替代/Builder模式
+2. 流式API：Java8 的 `Stream` API 就是典型的链式调用
+3. JDBC/ORM 操作
+
+案例代码: [ChainDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/mall/ChainDemo.java)
+
+
+### 4.2 大厂业务需求说明
+✅**切记:** 功能--->性能（完成--->完美）
+
+电商网站比价需求分析：
+1. 需求说明： 
+   1. 同一款产品，同时搜索出同款产品在各大电商平台的售价 
+   2. 同一款产品，同时搜索出本产品在同一个电商平台下，各个入驻卖家售价是多少
+2. 输出返回：
+   1. 出来结果希望是同款产品的在不同地方的价格清单列表，返回一个`List<String>`
+   2. 例如：《Mysql》 in jd price is 88.05  《Mysql》 in taobao price is 90.43
+3. 解决方案，对比同一个产品在各个平台上的价格，要求获得一个清单列表
+   1. step by step，按部就班，查完淘宝查京东，查完京东查天猫....
+   2. all in，万箭齐发，一口气多线程异步任务同时查询
+
+
+### 4.3 比价案例实战Case
+* 测试代码: [CompletableFutureMallDemo.java](../AdvanceDemo01/src/main/java/com/ylqi007/mall/CompletableFutureMallDemo.java)
 
 
 ## 5. CompletableFuture 常用方法
@@ -163,7 +215,7 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 * 测试代码: [CompletableFutureAPI4ApplyToEitherTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI4ApplyToEitherTest.java)
 
 
-### 5.5 对计算结果进行选用
+### 5.5 对计算结果进行合并
 两个 `CompletionStage` 任务都完成后，最终把两个任务的结果一起交给 `thenCombine()` 来处理。
 先完成的先等着，等待其他分支任务。
 
