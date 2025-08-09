@@ -158,12 +158,9 @@ JDK8 设计出 `CompletableFuture`，`CompletableFuture` 提供了一种**观察
 * 测试代码: [CompletableFutureAPI3AcceptRunApplyTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI3AcceptRunApplyTest.java)
 
 
-
-
-
 ### 5.4 对计算速度进行选用
-* applyToEither
-* [CompletableFutureAPI4ApplyToEitherTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/CompletableFutureAPI4ApplyToEitherTest.java)
+* `applyToEither(CompletionStage, Function)`: 谁快就用谁
+* 测试代码: [CompletableFutureAPI4ApplyToEitherTest.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap02completablefuture/CompletableFutureAPI4ApplyToEitherTest.java)
 
 
 ### 5.5 对计算结果进行选用
