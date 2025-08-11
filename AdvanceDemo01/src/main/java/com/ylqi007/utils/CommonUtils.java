@@ -50,6 +50,15 @@ public final class CommonUtils {
         }
     }
 
+    // 休眠指定的毫秒数
+    public static void sleepMiliseconds(long miliseconds) {
+        try {
+            TimeUnit.MICROSECONDS.sleep(miliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     // 打印输出带线程信息的日志
     public static void printThreadLog(String message) {
         // 时间戳 | 线程id | 线程名 | 日志信息
