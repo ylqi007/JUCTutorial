@@ -35,12 +35,7 @@
 └── pom.xml
 ```
 
-## Java 代码规范
-1. 阿里巴巴Java开手册：以最新版(黄山版)为准。
-   * [阿里巴巴Java开发手册_202008(嵩山版).pdf](docs/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C_202008%28%E5%B5%A9%E5%B1%B1%E7%89%88%29.pdf)
-   * ✅ [阿里巴巴Java开发手册_202202(黄山版).pdf](docs/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C_202202%28%E9%BB%84%E5%B1%B1%E7%89%88%29.pdf)
-   * [黄山归来不看岳：《Java开发手册（黄山版）》新增 11 条规约](https://developer.aliyun.com/article/888697)
-2. Google Java Style
+
 
 
 ## 命名习惯
@@ -49,6 +44,28 @@
 - class: XxxxDemo01
 
 
+## Java 代码规范
+1. 阿里巴巴Java开手册：以最新版(黄山版)为准。
+  * [阿里巴巴Java开发手册_202008(嵩山版).pdf](docs/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C_202008%28%E5%B5%A9%E5%B1%B1%E7%89%88%29.pdf)
+  * ✅ [阿里巴巴Java开发手册_202202(黄山版).pdf](docs/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C_202202%28%E9%BB%84%E5%B1%B1%E7%89%88%29.pdf)
+  * [黄山归来不看岳：《Java开发手册（黄山版）》新增 11 条规约](https://developer.aliyun.com/article/888697)
+2. Google Java Style
+
+
+## JDK版本
+就我自己而言，还是先以 JDK17 为主。
+1. 稳定性和新特性平衡
+   * 稳定为先：对于安全性、长期维护有较高要求的项目，JDK17 是更稳健的选择。
+   * 前瞻性体验：如果你的项目希望快速适应新技术、享受最新优化和特性，JDK21 则能提供更多可能性。
+2. 根据项目需求定制选择
+   * 企业级以及长期项目：优先考虑 JDK17，其长期支持策略能为项目提供持久稳定的保障。
+   * 敏捷开发与实验项目：JDK21 优先的特性和优化，能够为项目带来更快的迭代和更多创新空间。
+
+### Reference
+* [从JDK8飞升到JDK17，再到未来的JDK21](https://www.zhihu.com/tardis/zm/art/585377119?source_id=1003)
+* [新项目来了，JDK 17和JDK 21 该如何选择？](https://cloud.tencent.com/developer/article/2425043)
+* [千呼万唤始出来 JDK 21 LTS, 久等了](https://www.cnblogs.com/bokers/p/17725530.html)
+* [OpenJDK 21 升级指南](https://www.diguage.com/post/upgrade-to-openjdk21/)
 
 
 ## Reference
