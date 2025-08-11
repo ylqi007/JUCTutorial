@@ -69,37 +69,66 @@
 3. `public static boolean interrupted()` 是一个**静态方法**，返回当前线程的中断真实状态（boolean类型）后会将当前线程的中断状态设为`false`，此方法调用之后会清楚当前线程的中断标志位的状态（将中断标志置为false了），返回当前值并清零置为false。
 
 
-
 ## 2. LockSupport是什么
-
-
-
-
+LockSupport是用来创建锁和其他同步类的基本线程阻塞原语，其中park()和unpack()而作用分别是阻塞线程和解除阻塞线程.
 
 
 ## 3. 线程等待唤醒机制
-### 唤醒方法
-1. synchronized -- wait -- notify
-   * [Demo01SynchronizedWaitNotify.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap04locksupport/Demo01SynchronizedWaitNotify.java)
-2. Lock Condition
-   * 线程先要获得并持有锁，必须在锁块中
-   * 必须先等待，后唤醒，线程才能够被唤醒
-   * [Demo02LockConditionAwaitSignal.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap04locksupport/Demo02LockConditionAwaitSignal.java)
-3. LockSupport
-   * 许可证最多只有一个，不会累计
-   * park() 等到，类似 wait，await
-   * unpack() 唤醒，类似 notify，signal
-   1. 正常 + 无锁块要求
-   2. 之前错误的先唤醒后等待，LockSupport照样支持
-   3. 成双成对要牢记
+### 3.1 三种让线程等待和唤醒的方法
+* Method 1: 使用`Object`中的`wait()`方法让线程等待，使用`Object`中的`notify()`方法唤醒线程。
+* Method 2: 使用JUC包中的`Condition`的`await()`方法让线程等待，使用`signal()`方法唤醒线程。
+* Method 3: LockSupport类可以阻塞当前线程以及唤醒指定被阻塞的线程
 
 
-线程阻塞需要消耗凭证(permit)，这个凭证最多只有一个
-* 当调用 park() 时
-  * 如果有凭证，则会直接消耗这个 permit，然后正常退出
-  * 如果无凭证，就必须一直等带 permit 可用
-* 当调用 unpakc() 时
-  * 它只会增加一个凭证，但凭证最多只能有一个，累加无效
+### 3.2 `Object.wait()` and `Object.notify()` 实现线程等待和唤醒
+⚠️注意：
+* `wait()`和`notify()`方法必须要在同步代码块或方法里面，且成对出现使用。
+* 必须先`wait()`，再`notify()`，才能正常工作，否则会造成线程阻塞。
+
+示例代码: [Demo01SynchronizedWaitNotify.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap04locksupport/Demo01SynchronizedWaitNotify.java)
 
 
-![img.png](img.png)
+### 3.3 `Condition`接口中的`await()` and `signal()` 实现线程等待和唤醒
+⚠️注意：
+* `Condition`中的线程等待和唤醒方法，需要先获取锁
+* 一定要先`await()`后`signal()`，不要反了
+
+示例代码: [Demo02LockConditionAwaitSignal.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap04locksupport/Demo02LockConditionAwaitSignal.java)
+
+
+### 3.4 上述两个对象Object和Condition使用的限制条件
+1. 线程需要先获得并持有锁，必须在锁块（synchronized或lock）中
+2. 必须要先等待后唤醒，线程才能够被唤醒
+
+
+### 3.5 LockSupport类中的`park()`等待和`unpark()`唤醒
+* 是什么 
+  * `LockSupport` 是用于创建锁和其他同步类的基本线程阻塞原语 
+  * `LockSupport`类使用了一种名为Permit（许可）的概念来做到阻塞和唤醒线程的功能，每个线程都有一个许可（Permit），许可证只能有一个，**累加上限是1**。
+* 主要方法 
+  * 阻塞: Peimit许可证默认没有不能放行，所以一开始调用`park()`方法当前线程会阻塞，直到别的线程给当前线程发放peimit，park方法才会被唤醒。 
+    * `park/park(Object blocker)`-------阻塞当前线程/阻塞传入的具体线程 
+  * 唤醒: 调用`unpack(thread)`方法后 就会将thread线程的许可证peimit发放，会自动唤醒park线程，即之前阻塞中的`LockSupport.park()`方法会立即返回。 
+    * `unpark(Thread thread)`------唤醒处于阻塞状态的指定线程
+
+实例代码: [Demo03LockSupport.java](../AdvanceDemo01/src/main/java/com/ylqi007/chap04locksupport/Demo03LockSupport.java)
+
+
+#### ⚠️重点说明(重要)
+* `LockSupport`是用来创建锁和其他同步类的基本线程阻塞原语，所有的方法都是静态方法，可以让线程再任意位置阻塞，阻塞后也有对应的唤醒方法。归根结底，`LockSupport`时调用`Unsafe`中的native代码
+* `LockSupport`提供`park()`和`unpark()`方法实现阻塞线程和解除线程阻塞的过程，LockSupport和每个使用它的线程都有一个许可（Peimit）关联，每个线程都有一个相关的permit，peimit最多只有一个，重复调用unpark也不会积累凭证。
+* 形象理解：线程阻塞需要消耗凭证（Permit），这个凭证最多只有一个
+  * 当调用park时，如果有凭证，则会直接消耗掉这个凭证然后正常退出。如果没有凭证，则必须阻塞等待凭证可用；
+  * 当调用unpark时，它会增加一个凭证，但凭证最多只能有1各，累加无效。
+
+
+#### 面试题
+* 为什么LockSupport可以突破wait/notify的原有调用顺序？
+  * 因为`unpark()`获得了一个凭证，之后再调用`park()`方法，就可以名正言顺的凭证消费，故不会阻塞，先发放了凭证后续可以畅通无阻。
+* 为什么唤醒两次后阻塞两次，但最终结果还会阻塞线程？
+  * 因为凭证的数量最多为1，连续调用两次`unpark()`和调用一次`unpark()`效果一样，只会增加一个凭证，而调用两次`park()`却需要消费两个凭证，证不够，不能放行。
+* ![img.png](images/LockSupport_面试题.png)
+
+
+## Reference
+* 语雀: [4. LockSupport与线程中断](https://www.yuque.com/gongxi-wssld/csm31d/zvimvldac4smghrt#nfMZk)
