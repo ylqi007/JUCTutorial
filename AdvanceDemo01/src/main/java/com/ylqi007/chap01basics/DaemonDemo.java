@@ -1,4 +1,4 @@
-package com.ylqi007;
+package com.ylqi007.chap01basics;
 
 import java.util.concurrent.TimeUnit;
 
