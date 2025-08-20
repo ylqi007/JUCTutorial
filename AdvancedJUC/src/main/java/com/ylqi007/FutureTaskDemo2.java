@@ -18,11 +18,14 @@ public class FutureTaskDemo2 {
 
     /**
      * FutureTask(Callable<V> callable) : Creates a FutureTask that will, upon running, execute the given Callable.
+     *  * FutureTask ==> Future + Runnable
+     *  * FutureTask + Callable ==> Future + Runnable + Callable
      */
     @Test
     public void testFutureTaskWithCallable1() throws ExecutionException, InterruptedException {
         FutureTask<String> futureTask = new FutureTask<>(new MyCallable());
-        new Thread(futureTask).start();
+        Thread thread1 = new Thread(futureTask, "Thread-1");
+        thread1.start();
         System.out.println(futureTask.get());   // 如何获取异步线程的返回结果呢？ futureTask.get()
     }
 
@@ -154,7 +157,7 @@ class MyRunnable implements Runnable {
 class MyCallable implements Callable<String> {
     @Override
     public String call() throws Exception {
-        System.out.println("Calling MyCallable.call()...");
+        System.out.println(Thread.currentThread().getName() + ":: Calling MyCallable.call()...");
         return "Hello world!";
     }
 }
