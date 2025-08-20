@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>demo01</module>
-        <module>AdvanceDemo01</module>
+        <module>BasicJUC</module>
+        <module>AdvancedJUC</module>
         <module>CompletableFuture</module>
     </modules>
 
