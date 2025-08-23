@@ -4,7 +4,7 @@
 ### 1.1 面试题
 * `ThreadLocal` 中 `ThreadLocal
 * `Map` 的数据结构和关系？
-* `ThreadLocal` 的 key 是弱引用，这是为什么？
+  场景一: 线程间隔离, 使每个线程拥有一个独享的对象, 保证线程安全* `ThreadLocal` 的 key 是弱引用，这是为什么？
 * `ThreadLocal` 内存泄漏问题你知道吗？
 * `ThreadLocal` 中最后为什么要加 `remove()` 方法？
 
@@ -132,6 +132,20 @@ ThreadLocalMap从字面上就可以看出这是一个保存ThreadLocal对象的m
 * `ThreadLocalMap` 的Entry对 `ThreadLocal` 的引用为弱引用。避免了 `ThreadLocal` 对象无法被回收的问题
 * 都会通过 `expungeStaleEntry()`, `cleanSomeSlots()`, `replaceStaleEntry()` 这三个方法回收键为null的Entry对象的值（即为具体实例）以及entry对象本身从而防止内存泄漏，属于安全加固的方法
 * 群雄逐鹿起纷争，人各一份天下安
+
+
+## 使用场景
+### 场景一: 线程间隔离, 使每个线程拥有一个独享的对象, 保证线程安全
+> 我们知道很多JDK中提供的类都是线程不安全的, 比如说Random类, 我们可以用它来产生随机数, 为什么他是线程不安全的呢? 因为他其实是使用种子来产生随机数的, 使用旧种子产生新种子, 那么在多线程的情况下, 因为程序的异步性, 就可能有多个线程拿到相同的旧种子, 从而产生相同的新种子, 如果是这样, 这就不能叫做随机数了.
+> 所以我们就需要每个线程都有一个独享的Random实例.
+
+* [Demo04RandomTest.java](../AdvancedJUC/src/main/java/com/ylqi007/chap09threadlocal/Demo04RandomTest.java)
+
+
+### 场景二: 线程内共享, 线程级别跨函数传递参数
+> 在我们使用SpringMVC框架的时候, 我们可以在控制层通过HttpServlet获取Session, 但是如果我需要在服务层或者数据访问层获取Session怎么办? 或者如果我需要传递一些参数从控制层到其他层应该怎么做呢?
+> 我们可以利用ThreadLocal线程内共享的特点, 把需要传递的参数使用ThreadLocal保存下来, 然后在需要使用的时候拿出来.
+
 
 
 ## Reference
