@@ -2,6 +2,8 @@
 
 视频正确食用方法：了解知识点，然后自己通过源码或者查找资料完善
 
+做难事，必有所得
+
 ## 结构说明
 ```shell
 ➜  JUCTutorial git:(main) ✗ tree -L 2
@@ -81,3 +83,15 @@
 * [【多线程】锁机制详解](https://blog.csdn.net/qq_34416331/article/details/107764522)
 * [2024最新!CompletableFuture异步编程详解一[入门]](https://blog.csdn.net/ManCxyster/article/details/135283796)
 * [Java 并发编程 78 讲-完](https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%2078%20%E8%AE%B2-%E5%AE%8C)
+* [小新成长之路](https://www.cnblogs.com/star95?page=1)
+  * [万字长文深度解读Java线程池，硬核源码分析](https://www.cnblogs.com/star95/p/17714057.html)
+
+
+* [一文搞懂JUC并发编程](https://www.cnblogs.com/ZhangHao-Study/p/16994667.html)
+
+书
+1. Java 并发编程实战
+2. Java 并发编程的艺术
+3. ~~图解 Java 并发编程~~
+4. https://github.com/RedSpider1/concurrent
+5. 
